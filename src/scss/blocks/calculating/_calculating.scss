@@ -53,6 +53,9 @@
                 background-color: $primary;
             }
         }
+        &-item-input {
+            cursor: auto;
+        }
         &_medium {
             width: 743px;
             justify-content: space-between;
