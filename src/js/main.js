@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // ! TIMER
 
-   const deadline = '2021-05-11';
+   const deadline = '2022-05-11';
 
    function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
       function updateClock() {
          const t = getTimeRemaining(endtime);
 
-         days.innerHTML = getZero(t.days);
-         hours.innerHTML = getZero(t.hours);
-         minutes.innerHTML = getZero(t.minutes);
-         seconds.innerHTML = getZero(t.seconds);
+         days.textContent = getZero(t.days);
+         hours.textContent = getZero(t.hours);
+         minutes.textContent = getZero(t.minutes);
+         seconds.textContent = getZero(t.seconds);
 
          if (t.total <= 0) {
             clearInterval(timeInterval);
@@ -92,5 +92,21 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
    setClock('.timer', deadline);
+
+   // ! MODAL
+
+   const modalWindow = document.querySelector('.modal');
+   
+   document.addEventListener('click', (event) => {
+      if (event.target && event.target.hasAttribute('data-modal')) {
+         modalWindow.style.display = 'block';
+      }
+   });
+
+   document.addEventListener('click', (event) => {
+      if (event.target && event.target.hasAttribute('data-close')) {
+         modalWindow.style.display = 'none';
+      }
+   });
 
 });
