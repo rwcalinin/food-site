@@ -34,6 +34,9 @@
         background-color: transparent;
         cursor: pointer;
     }
+    &__opened {
+        display: block;
+    }
     &__title {
         text-align: center;
         font-size: 22px;

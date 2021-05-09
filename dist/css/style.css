@@ -513,6 +513,8 @@ a {
     border: none;
     background-color: transparent;
     cursor: pointer; }
+  .modal__opened {
+    display: block; }
   .modal__title {
     text-align: center;
     font-size: 22px;

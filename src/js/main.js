@@ -96,16 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
    // ! MODAL
 
    const modalWindow = document.querySelector('.modal');
-   
-   document.addEventListener('click', (event) => {
-      if (event.target && event.target.hasAttribute('data-modal')) {
-         modalWindow.style.display = 'block';
-      }
-   });
 
    document.addEventListener('click', (event) => {
-      if (event.target && event.target.hasAttribute('data-close')) {
-         modalWindow.style.display = 'none';
+      if (event.target && event.target.hasAttribute('data-modal') || event.target.hasAttribute('data-close')) {
+         modalWindow.classList.toggle('modal__opened');
       }
    });
 
