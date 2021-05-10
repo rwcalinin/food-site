@@ -222,7 +222,75 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.code === 'Escape' && isModalOpened(modalWindow)) {
       toggleModalWindow(modalWindow);
     }
-  });
+  }); // ! CARDS TEMPLATES
+
+  class MenuCard {
+    constructor(src, alt, title, descr, price, parentSelector) {
+      this.src = src;
+      this.alt = alt;
+      this.title = title;
+      this.descr = descr;
+      this.price = price;
+      this.parent = document.querySelector(parentSelector);
+      this.transfer = 73;
+      this.changeToRUB();
+    }
+
+    changeToRUB() {
+      this.price = +this.price * this.transfer;
+    }
+
+    render() {
+      const element = document.createElement('div');
+      element.innerHTML = `
+         <div class="menu__item">
+            <img src=${this.src} alt=${this.alt}>
+            <h3 class="menu__item-subtitle">${this.title}</h3>
+            <div class="menu__item-descr">${this.descr}</div>
+            <div class="menu__item-divider"></div>
+            <div class="menu__item-price">
+               <div class="menu__item-cost">Цена:</div>
+               <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
+            </div>
+         </div>
+         `;
+      this.parent.append(element);
+    }
+
+  }
+
+  new MenuCard("img/tabs/post.jpg", "post", 'Меню "Постное"', 'Меню “Постное” - полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 2.5, '.menu .container').render(); // class Rectangle {
+  //    constructor(height, width) {
+  //       this.height = height;
+  //       this.width = width;
+  //    }
+  //    calcArea() {
+  //       return this.height * this.width;
+  //    }
+  // }
+  // class ColoredRectangleWithText extends Rectangle {
+  //    constructor(height, width, text, bgColor) {
+  //       super(height, width); // берёт от родителя итемы объекта. Всегда 1 строчкой
+  //                // в скобках НУЖНО указать свойства, которые нужны
+  //                // например super(width, height);
+  //       this.text = text;
+  //       this.bgColor = bgColor;
+  //    }
+  //    showMyProps() {
+  //       console.log(`Текст: ${this.text}, цвет: ${this.bgColor}`);
+  //    }
+  // }
+  // const square = new Rectangle(10, 10),
+  //       long = new Rectangle(20, 100),
+  //       colored = new ColoredRectangleWithText(30, 40, 'hi', '#000');
+  // console.log(square.calcArea());
+  // console.log(long.calcArea());
+  // colored.showMyProps();
+  // console.log(colored.calcArea());
+  // // 1) Обычная функция: this = window, но если use strict, то undefined
+  // // 2) Контекст у методов объекта - сам объект
+  // // 3) this в конструкторах и классах - это новый экземпляр объекта
+  // // 4) Ручная привязка this: call, apply, bind
 });
 
 /***/ })
