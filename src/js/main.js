@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -213,5 +213,68 @@ document.addEventListener('DOMContentLoaded', () => {
       '.menu .container',
       'menu__item', 'big'
    ).render();
+
+      // obj.property -- доступ к свойству объекта
+// obj["property with tab"] -- доступ к свойству с пробелами
+// obj[varWithKey] -- получить значение свойства из внешней переменной
+
+// delete obj.property -- удаление свойства
+// "key" in obj -- проверка существования
+// for (let key in obj) -- перебор каждого ключа и действия с ним внутри телефона
+
+
+// ! Forms
+
+      const forms = document.querySelectorAll('form');
+      
+      const message = {
+         loading: 'Загрузка',
+         success: 'Спасибо! Скоро мы с Вами свяжемся',
+         failure: 'Что-то пошло не так'
+      };
+
+      forms.forEach(item => {
+         postData(item);
+      });
+
+      function postData(form) {
+         form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            form.append(statusMessage);
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            
+            request.setRequestHeader('Content-type', 'application/json');
+            const formData = new FormData(form);
+
+            const object = {};
+            formData.forEach(function(value, key) {
+               object[key] = value;
+            });
+
+            const json = JSON.stringify(object);
+
+            request.send(json);
+
+            request.addEventListener('load', () => {
+               if (request.status === 200) {
+                  console.log(request.response);
+                  statusMessage.textContent = message.success;
+                  form.reset();
+                  setTimeout(() => {
+                     statusMessage.remove();
+                  }, 4000);
+               } else {
+                  statusMessage.textContent = message.failure;
+               }
+            });
+
+         });
+      }
 
 });
