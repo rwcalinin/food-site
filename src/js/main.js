@@ -288,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             request.send(json);
 
             request.addEventListener('load', () => {
+               !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
                if (request.status === 200) {
                   console.log(request.response);
                   showThanksModal(message.success);
