@@ -224,7 +224,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.code === 'Escape' && isModalOpened(modalWindow)) {
       toggleModalWindow(modalWindow);
     }
-  }); // ! CARDS TEMPLATES
+  });
+
+  function showThanksModal(message) {
+    const prevModalDialog = document.querySelector('.modal__dialog');
+    prevModalDialog.classList.add('hide');
+    const thanksModal = document.createElement('div');
+    thanksModal.classList.add('.modal__dialog');
+    thanksModal.innerHTML = `
+      <div class="modal__content">
+         <div data-close class="modal__close">×</div>
+         <div class="modal__title">${message}</div>
+      </div>
+      `;
+    document.querySelector('.modal').append(thanksModal);
+    setTimeout(() => {
+      thanksModal.remove();
+      prevModalDialog.classList.add('show');
+      prevModalDialog.classList.remove('hide');
+
+      if (modalWindow.classList.contains('modal--opened')) {
+        toggleModalWindow();
+      }
+    }, 4000);
+  } // ! CARDS TEMPLATES
+
 
   class MenuCard {
     constructor(src, alt, title, descr, price, parentSelector, ...classes) {
@@ -308,13 +332,11 @@ document.addEventListener('DOMContentLoaded', () => {
       request.addEventListener('load', () => {
         if (request.status === 200) {
           console.log(request.response);
-          statusMessage.textContent = message.success;
+          showThanksModal(message.success);
           form.reset();
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 4000);
+          statusMessage.remove();
         } else {
-          statusMessage.textContent = message.failure;
+          showThanksModal(message.failure);
         }
       });
     });
