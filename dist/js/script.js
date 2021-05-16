@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const forms = document.querySelectorAll('form');
   const message = {
-    loading: 'img/spinner.svg',
+    loading: 'icons/spinner.svg',
     success: 'Спасибо! Скоро мы с Вами свяжемся',
     failure: 'Что-то пошло не так'
   };
@@ -322,27 +322,26 @@ document.addEventListener('DOMContentLoaded', () => {
                margin: 0 auto;
             `;
       form.append(statusMessage);
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php');
-      request.setRequestHeader('Content-type', 'application/json');
-      const formData = new FormData(form);
-      const object = {};
-      formData.forEach(function (value, key) {
-        object[key] = value;
-      });
-      const json = JSON.stringify(object);
-      request.send(json);
-      request.addEventListener('load', () => {
-        !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
+      const formData = new FormData(form); // const object = {};
+      // formData.forEach(function (value, key) {
+      //    object[key] = value;
+      // });
+      // const json = JSON.stringify(object);
 
-        if (request.status === 200) {
-          console.log(request.response);
-          showThanksModal(message.success);
-          form.reset();
-          statusMessage.remove();
-        } else {
-          showThanksModal(message.failure);
-        }
+      fetch('server.php', {
+        method: "POST",
+        // headers: {
+        //    'Content-type': 'application/json'
+        // },
+        body: formData
+      }).then(data => {
+        !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
+        console.log(data);
+        form.reset();
+        showThanksModal(message.success);
+        statusMessage.remove();
+      }).catch(() => {
+        showThanksModal(message.failure);
       });
     });
   }

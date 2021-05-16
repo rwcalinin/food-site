@@ -240,69 +240,70 @@ document.addEventListener('DOMContentLoaded', () => {
       'menu__item', 'big'
    ).render();
 
-      // obj.property -- доступ к свойству объекта
-// obj["property with tab"] -- доступ к свойству с пробелами
-// obj[varWithKey] -- получить значение свойства из внешней переменной
+   // obj.property -- доступ к свойству объекта
+   // obj["property with tab"] -- доступ к свойству с пробелами
+   // obj[varWithKey] -- получить значение свойства из внешней переменной
 
-// delete obj.property -- удаление свойства
-// "key" in obj -- проверка существования
-// for (let key in obj) -- перебор каждого ключа и действия с ним внутри телефона
+   // delete obj.property -- удаление свойства
+   // "key" in obj -- проверка существования
+   // for (let key in obj) -- перебор каждого ключа и действия с ним внутри телефона
 
 
-// ! Forms
+   // ! Forms
 
-      const forms = document.querySelectorAll('form');
-      
-      const message = {
-         loading: 'img/spinner.svg',
-         success: 'Спасибо! Скоро мы с Вами свяжемся',
-         failure: 'Что-то пошло не так'
-      };
+   const forms = document.querySelectorAll('form');
 
-      forms.forEach(item => {
-         postData(item);
-      });
+   const message = {
+      loading: 'icons/spinner.svg',
+      success: 'Спасибо! Скоро мы с Вами свяжемся',
+      failure: 'Что-то пошло не так'
+   };
 
-      function postData(form) {
-         form.addEventListener('submit', (e) => {
-            e.preventDefault();
+   forms.forEach(item => {
+      postData(item);
+   });
 
-            const statusMessage = document.createElement('img');
-            statusMessage.src = message.loading;
-            statusMessage.style.cssText = `
+   function postData(form) {
+      form.addEventListener('submit', (e) => {
+         e.preventDefault();
+
+         const statusMessage = document.createElement('img');
+         statusMessage.src = message.loading;
+         statusMessage.style.cssText = `
                display: block;
                margin: 0 auto;
             `;
-            form.append(statusMessage);
+         form.append(statusMessage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            
-            request.setRequestHeader('Content-type', 'application/json');
-            const formData = new FormData(form);
+         const formData = new FormData(form);
 
-            const object = {};
-            formData.forEach(function(value, key) {
-               object[key] = value;
-            });
+         // const object = {};
+         // formData.forEach(function (value, key) {
+         //    object[key] = value;
+         // });
 
-            const json = JSON.stringify(object);
+         // const json = JSON.stringify(object);
 
-            request.send(json);
-
-            request.addEventListener('load', () => {
-               !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
-               if (request.status === 200) {
-                  console.log(request.response);
-                  showThanksModal(message.success);
-                  form.reset();
-                  statusMessage.remove();
-               } else {
-                  showThanksModal(message.failure);
-               }
-            });
-
+         fetch('server.php', {
+            method: "POST",
+            // headers: {
+            //    'Content-type': 'application/json'
+            // },
+            body: formData
+         })
+         .then(data => data.text())
+         .then(data => {
+            !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
+            console.log(data);
+            form.reset();
+            showThanksModal(message.success);
+            statusMessage.remove();
+         })
+         .catch(() => {
+            showThanksModal(message.failure);
          });
-      }
+
+      });
+   }
 
 });
