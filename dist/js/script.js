@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //    'Content-type': 'application/json'
         // },
         body: formData
-      }).then(data => {
+      }).then(data => data.text()).then(data => {
         !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
         console.log(data);
         form.reset();
@@ -345,6 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  fetch('db.json').then(data => data.json()).then(res => console.log(res));
 });
 
 /***/ })
