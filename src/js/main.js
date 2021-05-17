@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    const modalWindow = document.querySelector('.modal'),
       // MODAL TIMER FOR APPEARING
-      modalTimerId = setTimeout(toggleModalWindow, 15000);
+      modalTimerId = setTimeout(toggleModalWindow, 255000);
 
    function checkModalStatus(event) {
       return (
@@ -285,27 +285,82 @@ document.addEventListener('DOMContentLoaded', () => {
          // const json = JSON.stringify(object);
 
          fetch('server.php', {
-            method: "POST",
-            // headers: {
-            //    'Content-type': 'application/json'
-            // },
-            body: formData
-         })
-         .then(data => data.text())
-         .then(data => {
-            !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
-            console.log(data);
-            form.reset();
-            showThanksModal(message.success);
-            statusMessage.remove();
-         })
-         .catch(() => {
-            showThanksModal(message.failure);
-         });
+               method: "POST",
+               // headers: {
+               //    'Content-type': 'application/json'
+               // },
+               body: formData
+            })
+            .then(data => data.text())
+            .then(data => {
+               !modalWindow.classList.contains('modal--opened') ? toggleModalWindow() : false;
+               console.log(data);
+               form.reset();
+               showThanksModal(message.success);
+               statusMessage.remove();
+            })
+            .catch(() => {
+               showThanksModal(message.failure);
+            });
 
       });
    }
 
+   // 1. Получить все элементы, с которыми будем работать
+   // 2. Параметр, определяющий текущий слайд (индекс)
+   // 3. Функция, показывающая слайды (две функции внутри: показ и скрытие других)
+   // 3.1. В условиях функции сделать так, чтобы можно было с 1 на 4 перейти и с 4 на 1, грубо говоря - не утыкаться в стену
+   // 4. Обработчики событий на стрелочки (нажимаем - вызывается функция, изменяется индекс)
+   // 5. При создании страницы определить кол-во слайдов, поместить количество в вёрстку.
+   // 5.1. Отображаем 01 слайдер и вписываем в вёрстку номер
+   // 5.2. Также обязательно, если число не двузначное, добавлять в начало ноль
+
+   // ! slider offer
+
+   const offerSlider = document.querySelector('.offer__slider'),
+         totalCount = offerSlider.querySelector('#total'),
+         prevButton = offerSlider.querySelector('.offer__slider-prev'),
+         nextButton = offerSlider.querySelector('.offer__slider-next'),
+         totalSliders = offerSlider.querySelectorAll('.offer__slide'),
+         totalSlidersCount = totalSliders.length;
+
+   let currentCount = offerSlider.querySelector('#current'),
+       slideCounter = 1;
+
+   // sliders init
    
+   slideInit();
+
+   function slideInit() {
+      totalSliders.forEach((item) => {
+         item.classList.toggle('hide');
+      })
+      totalSliders[0].classList.toggle('hide');
+      slideCountAndPaste();
+   }
+
+   function toggleSlide(slideNumber) {
+      slideNumber.toggle('hide');
+   }
+
+   function slideCountAndPaste() {
+      currentCount.textContent = slideCounter;
+      if (currentCount.textContent.length === 1) {
+         currentCount.textContent = `0${slideCounter}`;
+      }
+      totalCount.textContent = totalSliders.length;
+      if (totalCount.textContent.length === 1) {
+         totalCount.textContent = `0${totalSliders.length}`;
+      }
+   }
+
+   nextButton.addEventListener('click', (event) => {
+      
+   });
+
+   console.log(currentCount);
+
+   console.log(totalSlidersCount);
+   console.log(totalSliders);
 
 });
