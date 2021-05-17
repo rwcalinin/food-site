@@ -361,8 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton = offerSlider.querySelector('.offer__slider-next'),
         totalSliders = offerSlider.querySelectorAll('.offer__slide');
   let currentCount = offerSlider.querySelector('#current'),
-      activeSlideIndex = 0; // sliders init
-
+      activeSlideIndex = 0;
   slideInit();
 
   function slideInit() {
@@ -393,18 +392,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   nextButton.addEventListener('click', () => {
     toggleSlide(totalSliders[activeSlideIndex]);
-    activeSlideIndex++;
+
+    if (activeSlideIndex != totalSliders.length) {
+      activeSlideIndex++;
+    }
+
+    if (activeSlideIndex == totalSliders.length) {
+      activeSlideIndex = 0;
+    }
+
     slideCountAndPaste();
     toggleSlide(totalSliders[activeSlideIndex]);
   });
   prevButton.addEventListener('click', () => {
     toggleSlide(totalSliders[activeSlideIndex]);
-    activeSlideIndex--;
+
+    if (activeSlideIndex != -1) {
+      activeSlideIndex--;
+    }
+
+    if (activeSlideIndex == -1) {
+      activeSlideIndex = totalSliders.length - 1;
+    }
+
     slideCountAndPaste();
     toggleSlide(totalSliders[activeSlideIndex]);
   });
-  console.log(totalSliders.length);
-  console.log(activeSlideIndex);
 });
 
 /***/ })

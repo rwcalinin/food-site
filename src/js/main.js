@@ -318,16 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
    // ! slider offer
 
    const offerSlider = document.querySelector('.offer__slider'),
-         totalCount = offerSlider.querySelector('#total'),
-         prevButton = offerSlider.querySelector('.offer__slider-prev'),
-         nextButton = offerSlider.querySelector('.offer__slider-next'),
-         totalSliders = offerSlider.querySelectorAll('.offer__slide');
+      totalCount = offerSlider.querySelector('#total'),
+      prevButton = offerSlider.querySelector('.offer__slider-prev'),
+      nextButton = offerSlider.querySelector('.offer__slider-next'),
+      totalSliders = offerSlider.querySelectorAll('.offer__slide');
 
    let currentCount = offerSlider.querySelector('#current'),
-       activeSlideIndex = 0;
+      activeSlideIndex = 0;
 
-   // sliders init
-   
    slideInit();
 
    function slideInit() {
@@ -355,19 +353,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
    nextButton.addEventListener('click', () => {
       toggleSlide(totalSliders[activeSlideIndex]);
-      activeSlideIndex++;
+      if (activeSlideIndex != totalSliders.length) {
+         activeSlideIndex++;
+      }
+      if (activeSlideIndex == totalSliders.length) {
+         activeSlideIndex = 0;
+      }
       slideCountAndPaste();
       toggleSlide(totalSliders[activeSlideIndex]);
    });
 
    prevButton.addEventListener('click', () => {
       toggleSlide(totalSliders[activeSlideIndex]);
-      activeSlideIndex--;
+      if (activeSlideIndex != -1) {
+         activeSlideIndex--;
+      }
+      if (activeSlideIndex == -1) {
+         activeSlideIndex = totalSliders.length - 1;
+      }
       slideCountAndPaste();
       toggleSlide(totalSliders[activeSlideIndex]);
    });
-
-   console.log(totalSliders.length);
-   console.log(activeSlideIndex);
 
 });
