@@ -359,30 +359,29 @@ document.addEventListener('DOMContentLoaded', () => {
         totalCount = offerSlider.querySelector('#total'),
         prevButton = offerSlider.querySelector('.offer__slider-prev'),
         nextButton = offerSlider.querySelector('.offer__slider-next'),
-        totalSliders = offerSlider.querySelectorAll('.offer__slide'),
-        totalSlidersCount = totalSliders.length;
+        totalSliders = offerSlider.querySelectorAll('.offer__slide');
   let currentCount = offerSlider.querySelector('#current'),
-      slideCounter = 1; // sliders init
+      activeSlideIndex = 0; // sliders init
 
   slideInit();
 
   function slideInit() {
     totalSliders.forEach(item => {
-      item.classList.toggle('hide');
+      toggleSlide(item);
     });
-    totalSliders[0].classList.toggle('hide');
+    toggleSlide(totalSliders[0]);
     slideCountAndPaste();
   }
 
   function toggleSlide(slideNumber) {
-    slideNumber.toggle('hide');
+    slideNumber.classList.toggle('hide');
   }
 
   function slideCountAndPaste() {
-    currentCount.textContent = slideCounter;
+    currentCount.textContent = activeSlideIndex + 1;
 
     if (currentCount.textContent.length === 1) {
-      currentCount.textContent = `0${slideCounter}`;
+      currentCount.textContent = `0${activeSlideIndex + 1}`;
     }
 
     totalCount.textContent = totalSliders.length;
@@ -392,10 +391,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  nextButton.addEventListener('click', event => {});
-  console.log(currentCount);
-  console.log(totalSlidersCount);
-  console.log(totalSliders);
+  nextButton.addEventListener('click', () => {
+    toggleSlide(totalSliders[activeSlideIndex]);
+    activeSlideIndex++;
+    slideCountAndPaste();
+    toggleSlide(totalSliders[activeSlideIndex]);
+  });
+  prevButton.addEventListener('click', () => {
+    toggleSlide(totalSliders[activeSlideIndex]);
+    activeSlideIndex--;
+    slideCountAndPaste();
+    toggleSlide(totalSliders[activeSlideIndex]);
+  });
+  console.log(totalSliders.length);
+  console.log(activeSlideIndex);
 });
 
 /***/ })
