@@ -320,6 +320,23 @@ document.addEventListener('DOMContentLoaded', () => {
    let   offset = 0,
          currentSlide = 0;
 
+         function calcPasteCurrentCount() {
+            currentSlide = (offset / +width.slice(0, width.length - 2)) + 1;
+            if (currentSlide < 10) {
+               currentCount.textContent = `0${currentSlide}`;
+            } else {
+               currentCount.textContent = currentSlide;
+            }
+         }
+      
+         function calcPasteTotalCount() {
+            if (slides.length < 10) {
+               totalCount.textContent = `0${slides.length}`;
+            } else {
+               totalCount.textContent = slides.length;
+            }
+         }
+
    // ? init block ------------------------
    calcPasteCurrentCount();
    calcPasteTotalCount();
@@ -327,28 +344,11 @@ document.addEventListener('DOMContentLoaded', () => {
    slidesField.style.display = 'flex';
    slidesField.style.transition = '0.5s all';
    slidesWrapper.style.overflow = 'hidden';
-   
+
    slides.forEach(slide => {
       slide.style.width = width;
    });
    // ? ------------------------------------
-
-   function calcPasteCurrentCount() {
-      currentSlide = (offset / +width.slice(0, width.length - 2)) + 1;
-      if (currentSlide < 10) {
-         currentCount.textContent = `0${currentSlide}`;
-      } else {
-         currentCount.textContent = currentSlide;
-      }
-   }
-
-   function calcPasteTotalCount() {
-      if (slides.length < 10) {
-         totalCount.textContent = `0${slides.length}`;
-      } else {
-         totalCount.textContent = slides.length;
-      }
-   }
 
    nextButton.addEventListener('click', () => {
       if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {

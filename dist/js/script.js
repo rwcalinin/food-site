@@ -356,17 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slidesField = document.querySelector('.offer__slider-inner'),
         width = window.getComputedStyle(slidesWrapper).width;
   let offset = 0,
-      currentSlide = 0; // ? init block ------------------------
-
-  calcPasteCurrentCount();
-  calcPasteTotalCount();
-  slidesField.style.width = 100 * slides.length + '%';
-  slidesField.style.display = 'flex';
-  slidesField.style.transition = '0.5s all';
-  slidesWrapper.style.overflow = 'hidden';
-  slides.forEach(slide => {
-    slide.style.width = width;
-  }); // ? ------------------------------------
+      currentSlide = 0;
 
   function calcPasteCurrentCount() {
     currentSlide = offset / +width.slice(0, width.length - 2) + 1;
@@ -384,7 +374,18 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       totalCount.textContent = slides.length;
     }
-  }
+  } // ? init block ------------------------
+
+
+  calcPasteCurrentCount();
+  calcPasteTotalCount();
+  slidesField.style.width = 100 * slides.length + '%';
+  slidesField.style.display = 'flex';
+  slidesField.style.transition = '0.5s all';
+  slidesWrapper.style.overflow = 'hidden';
+  slides.forEach(slide => {
+    slide.style.width = width;
+  }); // ? ------------------------------------
 
   nextButton.addEventListener('click', () => {
     if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
