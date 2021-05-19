@@ -306,14 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
    }
 
-   // 1. Получить все элементы, с которыми будем работать
-   // 2. Параметр, определяющий текущий слайд (индекс)
-   // 3. Функция, показывающая слайды (две функции внутри: показ и скрытие других)
-   // 3.1. В условиях функции сделать так, чтобы можно было с 1 на 4 перейти и с 4 на 1, грубо говоря - не утыкаться в стену
-   // 4. Обработчики событий на стрелочки (нажимаем - вызывается функция, изменяется индекс)
-   // 5. При создании страницы определить кол-во слайдов, поместить количество в вёрстку.
-   // 5.1. Отображаем 01 слайдер и вписываем в вёрстку номер
-   // 5.2. Также обязательно, если число не двузначное, добавлять в начало ноль
 
    // ! slider offer
 
@@ -321,58 +313,72 @@ document.addEventListener('DOMContentLoaded', () => {
       totalCount = offerSlider.querySelector('#total'),
       prevButton = offerSlider.querySelector('.offer__slider-prev'),
       nextButton = offerSlider.querySelector('.offer__slider-next'),
-      totalSliders = offerSlider.querySelectorAll('.offer__slide');
+      totalSliders = offerSlider.querySelectorAll('.offer__slide'),
+      slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+      slidesField = document.querySelector('.offer__slider-inner'),
+      width = window.getComputedStyle(slidesWrapper).width;
 
    let currentCount = offerSlider.querySelector('#current'),
       activeSlideIndex = 0;
 
-   slideInit();
-
-   function slideInit() {
-      totalSliders.forEach((item) => {
-         toggleSlide(item);
-      })
-      toggleSlide(totalSliders[0]);
-      slideCountAndPaste();
-   }
-
-   function toggleSlide(slideNumber) {
-      slideNumber.classList.toggle('hide');
-   }
-
-   function slideCountAndPaste() {
-      currentCount.textContent = activeSlideIndex + 1;
-      if (currentCount.textContent.length === 1) {
-         currentCount.textContent = `0${activeSlideIndex + 1}`;
-      }
-      totalCount.textContent = totalSliders.length;
-      if (totalCount.textContent.length === 1) {
-         totalCount.textContent = `0${totalSliders.length}`;
-      }
-   }
-
-   nextButton.addEventListener('click', () => {
-      toggleSlide(totalSliders[activeSlideIndex]);
-      if (activeSlideIndex != totalSliders.length) {
-         activeSlideIndex++;
-      }
-      if (activeSlideIndex == totalSliders.length) {
-         activeSlideIndex = 0;
-      }
-      slideCountAndPaste();
-      toggleSlide(totalSliders[activeSlideIndex]);
+   // ! первый вариант (горизонтальный с прокруткой)
+   slidesField.style.width = 100 * totalSliders.length + '%';
+   slidesField.style.display = 'flex';
+   slidesField.style.transition = '0.5s all';
+   slidesWrapper.style.overflow = 'hidden';
+   totalSliders.forEach(slide => {
+      slide.style.width = width;
    });
 
-   prevButton.addEventListener('click', () => {
-      toggleSlide(totalSliders[activeSlideIndex]);
-      if (activeSlideIndex != -1) {
-         activeSlideIndex--;
-      }
-      if (activeSlideIndex == -1) {
-         activeSlideIndex = totalSliders.length - 1;
-      }
-      slideCountAndPaste();
-      toggleSlide(totalSliders[activeSlideIndex]);
-   });
+
+   // ! второй вариант
+   // slideInit();
+
+   // function slideInit() {
+   //    totalSliders.forEach((item) => {
+   //       toggleSlide(item);
+   //    })
+   //    toggleSlide(totalSliders[0]);
+   //    slideCountAndPaste();
+   // }
+
+   // function toggleSlide(slideNumber) {
+   //    slideNumber.classList.toggle('hide');
+   // }
+
+   // function slideCountAndPaste() {
+   //    currentCount.textContent = activeSlideIndex + 1;
+   //    if (currentCount.textContent.length === 1) {
+   //       currentCount.textContent = `0${activeSlideIndex + 1}`;
+   //    }
+   //    totalCount.textContent = totalSliders.length;
+   //    if (totalCount.textContent.length === 1) {
+   //       totalCount.textContent = `0${totalSliders.length}`;
+   //    }
+   // }
+
+   // nextButton.addEventListener('click', () => {
+   //    toggleSlide(totalSliders[activeSlideIndex]);
+   //    if (activeSlideIndex != totalSliders.length) {
+   //       activeSlideIndex++;
+   //    }
+   //    if (activeSlideIndex == totalSliders.length) {
+   //       activeSlideIndex = 0;
+   //    }
+   //    slideCountAndPaste();
+   //    toggleSlide(totalSliders[activeSlideIndex]);
+   // });
+
+   // prevButton.addEventListener('click', () => {
+   //    toggleSlide(totalSliders[activeSlideIndex]);
+   //    if (activeSlideIndex != -1) {
+   //       activeSlideIndex--;
+   //    }
+   //    if (activeSlideIndex == -1) {
+   //       activeSlideIndex = totalSliders.length - 1;
+   //    }
+   //    slideCountAndPaste();
+   //    toggleSlide(totalSliders[activeSlideIndex]);
+   // });
 
 });
