@@ -348,29 +348,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const totalCount = document.querySelector('#total'),
+        currentCount = document.querySelector('#current'),
         prevButton = document.querySelector('.offer__slider-prev'),
         nextButton = document.querySelector('.offer__slider-next'),
         slides = document.querySelectorAll('.offer__slide'),
         slidesWrapper = document.querySelector('.offer__slider-wrapper'),
         slidesField = document.querySelector('.offer__slider-inner'),
         width = window.getComputedStyle(slidesWrapper).width;
-  let offset = 0;
+  let offset = 0,
+      currentSlide = 0; // ? init block ------------------------
+
+  calcPasteCurrentCount();
+  calcPasteTotalCount();
   slidesField.style.width = 100 * slides.length + '%';
   slidesField.style.display = 'flex';
   slidesField.style.transition = '0.5s all';
   slidesWrapper.style.overflow = 'hidden';
   slides.forEach(slide => {
     slide.style.width = width;
-  }); // function slideCountAndPaste() {
-  //    currentCount.textContent = activeSlideIndex + 1;
-  //    if (currentCount.textContent.length === 1) {
-  //       currentCount.textContent = `0${activeSlideIndex + 1}`;
-  //    }
-  //    totalCount.textContent = slides.length;
-  //    if (totalCount.textContent.length === 1) {
-  //       totalCount.textContent = `0${slides.length}`;
-  //    }
-  // }
+  }); // ? ------------------------------------
+
+  function calcPasteCurrentCount() {
+    currentSlide = offset / +width.slice(0, width.length - 2) + 1;
+
+    if (currentSlide < 10) {
+      currentCount.textContent = `0${currentSlide}`;
+    } else {
+      currentCount.textContent = currentSlide;
+    }
+  }
+
+  function calcPasteTotalCount() {
+    if (slides.length < 10) {
+      totalCount.textContent = `0${slides.length}`;
+    } else {
+      totalCount.textContent = slides.length;
+    }
+  }
 
   nextButton.addEventListener('click', () => {
     if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
@@ -380,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     slidesField.style.transform = `translateX(-${offset}px)`;
+    calcPasteCurrentCount();
   });
   prevButton.addEventListener('click', () => {
     if (offset == 0) {
@@ -389,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     slidesField.style.transform = `translateX(-${offset}px)`;
+    calcPasteCurrentCount();
   });
 });
 
