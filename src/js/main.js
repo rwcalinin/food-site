@@ -459,10 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
          console.log(ratio, sex);
 
          elements.forEach(elem => {
-            elem.classList.remove('activeClass');
+            elem.classList.remove(activeClass);
          });
 
-         event.target.classList.add('activeClass');
+         event.target.classList.add(activeClass);
 
       });
 
