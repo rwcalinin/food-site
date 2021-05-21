@@ -522,11 +522,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function validateMultipleInputs(selector) {
+    const inputSelector = document.querySelectorAll(selector);
+    inputSelector.forEach(elem => {
+      elem.addEventListener('input', e => {
+        if (isNaN(elem.value)) {
+          e.target.classList.add('invalid-input');
+        } else {
+          e.target.classList.remove('invalid-input');
+        }
+      });
+    });
+  }
+
   getStaticInfo('#gender', 'calculating__choose-item_active');
   getStaticInfo('.calculating__choose_big', 'calculating__choose-item_active');
   getDynamicInfo('#age');
   getDynamicInfo('#weight');
   getDynamicInfo('#height');
+  validateMultipleInputs('.calculating__choose-item-input');
 });
 
 /***/ })

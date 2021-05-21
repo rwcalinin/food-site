@@ -430,7 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
        ratio = 1.375,
        height, weight, age;
 
-
    function calcTotal() {
       
       if (!sex || !height || !weight || !age || !ratio) {
@@ -455,34 +454,24 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.forEach(elem => {
 
          elem.addEventListener('click', (event) => {
-         
             if (event.target.getAttribute('data-ratio')) {
                ratio = +event.target.getAttribute('data-ratio');
             } else {
                sex = event.target.getAttribute('id');
             }
-   
             elements.forEach(elem => {
                elem.classList.remove(activeClass);
             });
-   
             event.target.classList.add(activeClass);
-   
             calcTotal();
-   
          });
-
       });
-
    }
 
 
    function getDynamicInfo(selector) {
-      
       const input = document.querySelector(selector);
-
       input.addEventListener('input', () => {
-
          switch(input.getAttribute('id')) {
             case 'height':
                   height = +input.value;
@@ -494,9 +483,22 @@ document.addEventListener('DOMContentLoaded', () => {
                   age = + input.value;
                   break;
          }
-
          calcTotal();
+      });
+   }
 
+
+   function validateMultipleInputs(selector) {
+      const inputSelector = document.querySelectorAll(selector);
+
+      inputSelector.forEach(elem => {
+         elem.addEventListener('input', (e) => {
+            if (isNaN(elem.value)) {
+               e.target.classList.add('invalid-input');
+            } else {
+               e.target.classList.remove('invalid-input');
+            }
+         });
       });
 
    }
@@ -506,5 +508,6 @@ document.addEventListener('DOMContentLoaded', () => {
    getDynamicInfo('#age');
    getDynamicInfo('#weight');
    getDynamicInfo('#height');
+   validateMultipleInputs('.calculating__choose-item-input');
 
 });
