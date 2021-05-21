@@ -426,9 +426,37 @@ document.addEventListener('DOMContentLoaded', () => {
    // ! CalCalc
 
    const result = document.querySelector('.calculating__result span');
-   let sex = 'female',
-       ratio = 1.375,
-       height, weight, age;
+
+   let sex, ratio, height, weight, age;
+
+   if (localStorage.getItem('sex')) {
+      sex = localStorage.getItem('sex');
+   } else {
+      sex = 'female';
+      localStorage.setItem('sex', 'female');
+   }
+
+   if (localStorage.getItem('ratio')) {
+      ratio = localStorage.getItem('ratio');
+   } else {
+      ratio = 1.375;
+      localStorage.setItem('ratio', 1.375);
+   }
+
+
+   function initLocalSettings(selector, activeClass) {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(elem => {
+         elem.classList.remove(activeClass);
+         if (elem.getAttribute('id') === localStorage.getItem('sex')) {
+            elem.classList.add(activeClass);
+         }
+         if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
+            elem.classList.add(activeClass);
+         }
+      });
+   }
+
 
    function calcTotal() {
       
@@ -447,17 +475,19 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
 
-   function getStaticInfo(parentSelector, activeClass) {
+   function getStaticInfo(selector, activeClass) {
       
-      const elements = document.querySelectorAll(`${parentSelector} div`);
+      const elements = document.querySelectorAll(selector);
 
       elements.forEach(elem => {
 
          elem.addEventListener('click', (event) => {
             if (event.target.getAttribute('data-ratio')) {
                ratio = +event.target.getAttribute('data-ratio');
+               localStorage.setItem('ratio', +event.target.getAttribute('data-ratio'));
             } else {
                sex = event.target.getAttribute('id');
+               localStorage.setItem('sex', event.target.getAttribute('id'));
             }
             elements.forEach(elem => {
                elem.classList.remove(activeClass);
@@ -472,6 +502,13 @@ document.addEventListener('DOMContentLoaded', () => {
    function getDynamicInfo(selector) {
       const input = document.querySelector(selector);
       input.addEventListener('input', () => {
+
+         if (isNaN(input.value) || input.value < 0) {
+            input.classList.add('invalid-input');
+         } else {
+            input.classList.remove('invalid-input');
+         }
+
          switch(input.getAttribute('id')) {
             case 'height':
                   height = +input.value;
@@ -487,27 +524,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
    }
 
+   initLocalSettings('#gender div', 'calculating__choose-item_active');
+   initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active');
 
-   function validateMultipleInputs(selector) {
-      const inputSelector = document.querySelectorAll(selector);
-
-      inputSelector.forEach(elem => {
-         elem.addEventListener('input', (e) => {
-            if (isNaN(elem.value)) {
-               e.target.classList.add('invalid-input');
-            } else {
-               e.target.classList.remove('invalid-input');
-            }
-         });
-      });
-
-   }
-
-   getStaticInfo('#gender', 'calculating__choose-item_active');
-   getStaticInfo('.calculating__choose_big', 'calculating__choose-item_active');
+   getStaticInfo('#gender div', 'calculating__choose-item_active');
+   getStaticInfo('.calculating__choose_big div', 'calculating__choose-item_active');
    getDynamicInfo('#age');
    getDynamicInfo('#weight');
    getDynamicInfo('#height');
-   validateMultipleInputs('.calculating__choose-item-input');
 
 });
