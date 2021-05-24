@@ -540,14 +540,17 @@ document.addEventListener('DOMContentLoaded', () => {
       switch (input.getAttribute('id')) {
         case 'height':
           height = +input.value;
+          localStorage.setItem('height', +input.value);
           break;
 
         case 'weight':
           weight = +input.value;
+          localStorage.setItem('weight', +input.value);
           break;
 
         case 'age':
           age = +input.value;
+          localStorage.setItem('age', +input.value);
           break;
       }
 
