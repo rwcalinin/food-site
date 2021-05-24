@@ -12,6 +12,32 @@ forms.forEach(item => {
    bindPostData(item);
 });
 
+function showThanksModal(message) {
+   const prevModalDialog = document.querySelector('.modal__dialog');
+  
+   prevModalDialog.classList.add('hide');
+  
+   const thanksModal = document.createElement('div');
+   thanksModal.classList.add('.modal__dialog');
+   thanksModal.innerHTML = `
+   <div class="modal__content">
+      <div data-close class="modal__close">×</div>
+      <div class="modal__title">${message}</div>
+   </div>
+   `;
+  
+   document.querySelector('.modal').append(thanksModal);
+  
+   setTimeout(() => {
+      thanksModal.remove();
+      prevModalDialog.classList.add('show');
+      prevModalDialog.classList.remove('hide');
+      if (modalWindow.classList.contains('modal--opened')) {
+         toggleModalWindow();
+      }
+   }, 4000);
+  }
+
 function bindPostData(form) {
    form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -56,4 +82,4 @@ function bindPostData(form) {
 }
 }
 
-module.exports = forms;
+export default forms;

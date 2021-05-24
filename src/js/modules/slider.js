@@ -116,4 +116,4 @@ dotsArr.forEach(dot => {
 });
 }
 
-module.exports = slider;
+export default slider;

@@ -115,4 +115,4 @@ function calc() {
    getDynamicInfo('#height');
 }
 
-module.exports = calc;
+export default calc;

@@ -78,4 +78,4 @@ function showThanksModal(message) {
 }
 }
 
-module.exports = modal;
+export default modal;
