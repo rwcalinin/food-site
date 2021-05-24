@@ -1,7 +1,7 @@
 {
   "name": "food",
   "version": "1.0.0",
-  "description": "",
+  "description": "Hello!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,18 +14,30 @@
     "last 2 ios versions"
   ],
   "devDependencies": {
-    "@babel/core": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "autoprefixer": "^9.7.1",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "autoprefixer": "^10.2.5",
+    "babel-loader": "^8.2.2",
     "browser-sync": "^2.26.14",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-sass": "^4.1.0",
     "json-server": "^0.16.3",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^3.3.12",
     "webpack-stream": "^5.2.1"
-  }
+  },
+  "dependencies": {
+    "postcss": "^8.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rwcalinin/food-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rwcalinin/food-site/issues"
+  },
+  "homepage": "https://github.com/rwcalinin/food-site#readme"
 }
